@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="card">
+        <div class="pesquisa">
+            <input type="text" placeholder="insira o nome da cidade" spellcheck="false">
+            <button onclick="pesquisar()"><img src="images/search.png"></button>
+        </div>
+        <div class="clima">
+            <img src="images/rain.png" class="clima-icone">
+            <h1 class="temp">16°C</h1> 
+            <h2 class="cid">São Paulo</h2>
+            <div class="detalhes">
+                <div class="col">
+                    <img src="images/humidity.png">
+                    <div>
+                        <p class="humidade">50%</p>
+                        <p>Humidade</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images/wind.png">
+                    <div>
+                        <p class="vento">50km/h</p>
+                        <p>Vento</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const apiKey = "2f6b725c3aacd48f47dc2def5068e2ee";
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric"
+    </script>
+</body>
+</html>
