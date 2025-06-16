@@ -10,7 +10,7 @@
     <div class="card">
         <div class="pesquisa">
             <input type="text" placeholder="insira o nome da cidade" spellcheck="false">
-            <button onclick="pesquisar()"><img src="images/search.png"></button>
+            <button onclick="checarClima()"><img src="images/search.png"></button>
         </div>
         <div class="clima">
             <img src="images/rain.png" class="clima-icone">
@@ -36,7 +36,26 @@
     </div>
     <script>
         const apiKey = "2f6b725c3aacd48f47dc2def5068e2ee";
-        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric"
-    </script>
+        const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
+
+        const caixaPesquisa = document.querySelector(".pesquisa input");
+        const botaoPesquisa = document.querySelector(".pesquisa button");
+
+        async function checarClima(cid){
+            const Response = await fetch(apiUrl + cid + `&appid=${apiKey}`);
+            var data = await Response.json();
+
+            console.log(data);
+
+            document.querySelector(".cid").innerHTML = data.name;
+            document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
+            document.querySelector(".humidade").innerHTML = data.main.humidity + "%";
+            document.querySelector(".vento").innerHTML = data.wind.speed + "km/h";
+            }
+
+        botaoPesquisa.addEventListener("click", ()=>{
+            checarClima(caixaPesquisa.value);
+        })
+    </script>   
 </body>
 </html>
