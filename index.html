@@ -10,7 +10,10 @@
     <div class="card">
         <div class="pesquisa">
             <input type="text" placeholder="insira o nome da cidade" spellcheck="false">
-            <button onclick="checarClima()"><img src="images/search.png"></button>
+            <button><img src="images/search.png"></button>
+        </div>
+        <div class="erro">
+            <p>nome de cidade invalida</p>
         </div>
         <div class="clima">
             <img src="images/rain.png" class="clima-icone">
@@ -37,21 +40,46 @@
     <script>
         const apiKey = "2f6b725c3aacd48f47dc2def5068e2ee";
         const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q="
+        
 
         const caixaPesquisa = document.querySelector(".pesquisa input");
         const botaoPesquisa = document.querySelector(".pesquisa button");
+        const iconeClima = document.querySelector(".clima-icone")
 
         async function checarClima(cid){
             const Response = await fetch(apiUrl + cid + `&appid=${apiKey}`);
-            var data = await Response.json();
 
-            console.log(data);
+            if(Response.status == 404){
+                document.querySelector(".erro").style.display = "block"
+                document.querySelector(".clima").style.display = "none"
+            } else {
+            var data = await Response.json();
 
             document.querySelector(".cid").innerHTML = data.name;
             document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "°C";
             document.querySelector(".humidade").innerHTML = data.main.humidity + "%";
             document.querySelector(".vento").innerHTML = data.wind.speed + "km/h";
+
+            if(data.weather[0].main == "Clouds"){
+                iconeClima.src = "images/clouds.png";
+            } else if (data.weather[0].main == "Clear"){
+                iconeClima.src = "images/clear.png";
+            } else if (data.weather[0].main == "Drizzle"){
+                iconeClima.src = "images/drizzle.png";
+            } else if (data.weather[0].main == "Mist"){
+                iconeClima.src = "images/mist.png";
+            } else if (data.weather[0].main == "Rain"){
+                iconeClima.src = "images/rain.png";
+            } else if (data.weather[0].main == "Snow"){
+                iconeClima.src = "images/snow.png";
             }
+
+            document.querySelector(".clima").style.display = "block";
+             document.querySelector(".erro").style.display = "none"
+            }
+           
+            }
+
 
         botaoPesquisa.addEventListener("click", ()=>{
             checarClima(caixaPesquisa.value);
